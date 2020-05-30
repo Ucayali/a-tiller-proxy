@@ -1,3 +1,7 @@
+
+require('dotenv').config();
+require('newrelic');
+
 const express = require('express');
 const path = require('path');
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -18,7 +22,12 @@ app.use('/items/:id', createProxyMiddleware({
 }));
 
 app.use('/api/related_products/:id', createProxyMiddleware({
-  target: 'http://54.166.182.193:3003/',
+  target: 'http://127.0.0.1:3003/',
+  changeOrigin: true,
+}));
+
+app.use('/api/related_products/', createProxyMiddleware({
+  target: 'http://127.0.0.1:3003/',
   changeOrigin: true,
 }));
 
